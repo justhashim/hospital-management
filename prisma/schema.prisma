@@ -3,15 +3,10 @@
 
 generator client {
   provider = "prisma-client-js"
-  // Optimize for serverless environments (NeonDB)
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  // NeonDB supports connection pooling via Prisma
-  directUrl = env("DATABASE_URL")
 }
 
 // User model for authentication

@@ -1,7 +1,7 @@
 import { prisma } from '../config/database';
 import { CreatePatientInput, UpdatePatientInput, PatientQueryInput } from '../utils/validation';
-import { NotFoundError, ForbiddenError } from '../utils/errors';
-import { Patient } from '@prisma/client';
+import { NotFoundError } from '../utils/errors';
+import type { Patient } from '@prisma/client';
 
 /**
  * Patient Service

@@ -151,9 +151,8 @@ export const loginUser = async (data: LoginInput): Promise<AuthResponse> => {
  */
 export const refreshAccessToken = async (refreshToken: string): Promise<AuthTokens> => {
     // Verify refresh token
-    let decoded;
     try {
-        decoded = verifyRefreshToken(refreshToken);
+        verifyRefreshToken(refreshToken);
     } catch (error) {
         throw new UnauthorizedError('Invalid or expired refresh token');
     }

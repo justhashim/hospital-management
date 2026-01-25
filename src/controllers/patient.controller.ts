@@ -67,7 +67,7 @@ export const getById = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
+        const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
 
         const patient = await getPatientById(id);
 
@@ -125,7 +125,7 @@ export const update = async (
             throw new ValidationError('User not authenticated');
         }
 
-        const { id } = req.params;
+        const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
 
         // Validate request body
         const validatedData = updatePatientSchema.parse(req.body);
@@ -155,7 +155,7 @@ export const remove = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
+        const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
 
         await deletePatient(id);
 
@@ -181,7 +181,7 @@ export const permanentDelete = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
+        const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
 
         await hardDeletePatient(id);
 

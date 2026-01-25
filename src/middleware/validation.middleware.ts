@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { AnyZodObject, ZodError } from 'zod';
+import { ZodTypeAny } from 'zod';
 
 /**
  * Validation Middleware
@@ -15,8 +15,8 @@ type ValidationType = 'body' | 'query' | 'params';
  * @param schema - Zod schema to validate against
  * @param type - Part of request to validate (body, query, or params)
  */
-export const validate = (schema: AnyZodObject, type: ValidationType = 'body') => {
-    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const validate = (schema: ZodTypeAny, type: ValidationType = 'body') => {
+    return async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = req[type];
             const validated = await schema.parseAsync(data);
@@ -31,14 +31,14 @@ export const validate = (schema: AnyZodObject, type: ValidationType = 'body') =>
 /**
  * Validate request body
  */
-export const validateBody = (schema: AnyZodObject) => validate(schema, 'body');
+export const validateBody = (schema: ZodTypeAny) => validate(schema, 'body');
 
 /**
  * Validate query parameters
  */
-export const validateQuery = (schema: AnyZodObject) => validate(schema, 'query');
+export const validateQuery = (schema: ZodTypeAny) => validate(schema, 'query');
 
 /**
  * Validate route parameters
  */
-export const validateParams = (schema: AnyZodObject) => validate(schema, 'params');
+export const validateParams = (schema: ZodTypeAny) => validate(schema, 'params');

@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import config from '../config';
 
 /**
@@ -93,3 +93,4 @@ export const decodeToken = (token: string): DecodedToken | null => {
         return null;
     }
 };
+

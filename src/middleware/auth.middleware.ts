@@ -15,7 +15,7 @@ import { AuthRequest, UserRole } from '../types';
  */
 export const authenticate = async (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
@@ -49,7 +49,7 @@ export const authenticate = async (
  * @param allowedRoles - Array of roles that are allowed to access the route
  */
 export const authorize = (...allowedRoles: UserRole[]) => {
-    return (req: Request, res: Response, next: NextFunction): void => {
+    return (req: Request, _res: Response, next: NextFunction): void => {
         try {
             const authReq = req as AuthRequest;
 
@@ -76,7 +76,7 @@ export const authorize = (...allowedRoles: UserRole[]) => {
  */
 export const optionalAuthenticate = async (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {

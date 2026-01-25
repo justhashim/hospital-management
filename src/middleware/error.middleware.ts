@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ZodError } from 'zod';
+import { ZodError, ZodIssue } from 'zod';
 import { AppError, ValidationError } from '../utils/errors';
 import { ErrorResponse } from '../types';
 import config from '../config';
@@ -15,13 +15,12 @@ import config from '../config';
  * Handle Zod validation errors
  */
 const handleZodError = (error: ZodError): ValidationError => {
-    const errors = error.errors.map((err) => ({
+    const errors = error.issues.map((err: ZodIssue) => ({
         field: err.path.join('.'),
         message: err.message,
     }));
 
-    const message = errors.map((e) => `${e.field}: ${e.message}`).join(', ');
-    return new ValidationError(message);
+    const message = errors.map((e: { field: string; message: string }) => `${e.field}: ${e.message}`).join(', ');
 };
 
 /**

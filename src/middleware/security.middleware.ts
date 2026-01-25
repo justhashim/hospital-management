@@ -1,6 +1,5 @@
 import helmet from 'helmet';
 import { Request, Response, NextFunction } from 'express';
-import config from '../config';
 
 /**
  * Security Middleware
@@ -39,7 +38,7 @@ export const securityHeaders = helmet({
  */
 export const sanitizeRequest = (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ): void => {
     // Remove any keys that start with $
@@ -80,7 +79,7 @@ export const sanitizeRequest = (
  * Remove sensitive headers from response
  */
 export const removeSensitiveHeaders = (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ): void => {
@@ -92,7 +91,7 @@ export const removeSensitiveHeaders = (
  * Add security-related response headers
  */
 export const addSecurityHeaders = (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ): void => {

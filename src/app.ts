@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import config from './config';
-import { prisma, checkDatabaseConnection } from './config/database';
+import { checkDatabaseConnection } from './config/database';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 import {
     securityHeaders,
@@ -69,7 +69,7 @@ app.use(generalLimiter);
 // Health Check Routes
 // ============================================
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
     res.json({
         success: true,
         message: 'Hospital Management API',
@@ -78,7 +78,7 @@ app.get('/', (req: Request, res: Response) => {
     });
 });
 
-app.get('/health', async (req: Request, res: Response) => {
+app.get('/health', async (_req: Request, res: Response) => {
     const dbConnected = await checkDatabaseConnection();
 
     res.status(dbConnected ? 200 : 503).json({

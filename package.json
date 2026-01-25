@@ -29,8 +29,8 @@
     "jwt",
     "authentication"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Hashim Mohamed T A",
+  "license": "MIT",
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },

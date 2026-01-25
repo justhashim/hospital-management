@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import config from './index';
 
 /**
  * Prisma Client Configuration for NeonDB
@@ -17,7 +18,8 @@ declare global {
 
 const prismaClientSingleton = () => {
     return new PrismaClient({
-        log: process.env.NODE_ENV === 'development'
+        datasourceUrl: config.databaseUrl,
+        log: config.nodeEnv === 'development'
             ? ['query', 'error', 'warn']
             : ['error'],
         errorFormat: 'pretty',
