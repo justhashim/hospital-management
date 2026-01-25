@@ -1084,10 +1084,6 @@ All passwords must meet these criteria:
 - isRevoked (Boolean)
 - createdAt
 
-## 🚀 Deployment
-
-This API is deployed and accessible at: **[https://your-api-domain.com](https://your-api-domain.com)** *(Update with actual URL)*
-
 ### Deployment Platform Options
 
 This application can be deployed on various platforms:
