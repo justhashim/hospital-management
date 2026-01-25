@@ -497,13 +497,9 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch
 5. Open a Pull Request
 
-## 📄 License
-
-ISC
-
 ## 👤 Author
 
-Your Name
+Hashim Mohamed T A
 
 ---
 
