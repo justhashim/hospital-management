@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { Pool, neonConfig } from '@neondatabase/serverless';
+import { PrismaNeon } from '@prisma/adapter-neon';
 import config from './index';
 
 /**
@@ -17,7 +19,12 @@ declare global {
 }
 
 const prismaClientSingleton = () => {
+    neonConfig.fetchConnectionCache = true;
+    const pool = new Pool({ connectionString: config.databaseUrl });
+    const adapter = new PrismaNeon(pool as any);
+    
     return new PrismaClient({
+        adapter,
         log: config.nodeEnv === 'development'
             ? ['query', 'error', 'warn']
             : ['error'],
