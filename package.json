@@ -31,6 +31,9 @@
   ],
   "author": "",
   "license": "ISC",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "packageManager": "pnpm@10.27.0",
   "dependencies": {
     "@prisma/client": "^7.3.0",
