@@ -1,0 +1,115 @@
+// Prisma Schema for Hospital Management System
+// Database: NeonDB (PostgreSQL with serverless support)
+
+generator client {
+  provider = "prisma-client-js"
+  // Optimize for serverless environments (NeonDB)
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // NeonDB supports connection pooling via Prisma
+  directUrl = env("DATABASE_URL")
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed with bcrypt
+  firstName String
+  lastName  String
+  role      Role     @default(USER)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  refreshTokens RefreshToken[]
+  createdPatients Patient[] @relation("CreatedBy")
+  updatedPatients Patient[] @relation("UpdatedBy")
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+// Role enum for RBAC
+enum Role {
+  ADMIN
+  USER
+  DOCTOR
+}
+
+// Refresh Token model for JWT authentication
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  isRevoked Boolean  @default(false)
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+// Patient model for hospital management
+model Patient {
+  id           String    @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String?   @unique
+  phone        String
+  dateOfBirth  DateTime
+  gender       Gender
+  address      String
+  city         String
+  state        String
+  zipCode      String
+  bloodGroup   BloodGroup?
+  allergies    String?   // JSON string or comma-separated
+  medicalHistory String? // Text field for medical history
+  emergencyContactName  String
+  emergencyContactPhone String
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  createdById  String
+  updatedById  String?
+
+  // Relations
+  createdBy User @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedBy User? @relation("UpdatedBy", fields: [updatedById], references: [id])
+
+  @@index([email])
+  @@index([phone])
+  @@index([lastName])
+  @@index([createdById])
+  @@map("patients")
+}
+
+// Gender enum
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// Blood Group enum
+enum BloodGroup {
+  A_POSITIVE
+  A_NEGATIVE
+  B_POSITIVE
+  B_NEGATIVE
+  AB_POSITIVE
+  AB_NEGATIVE
+  O_POSITIVE
+  O_NEGATIVE
+}
