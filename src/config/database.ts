@@ -18,7 +18,6 @@ declare global {
 
 const prismaClientSingleton = () => {
     return new PrismaClient({
-        datasourceUrl: config.databaseUrl,
         log: config.nodeEnv === 'development'
             ? ['query', 'error', 'warn']
             : ['error'],

@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import config from '../config';
 
 /**
@@ -24,11 +24,12 @@ export interface DecodedToken extends TokenPayload {
  * Short-lived token for API authentication
  */
 export const generateAccessToken = (payload: TokenPayload): string => {
-    return jwt.sign(payload, config.jwt.accessSecret, {
-        expiresIn: config.jwt.accessExpiresIn,
+    const options: SignOptions = {
+        expiresIn: config.jwt.accessExpiresIn as SignOptions['expiresIn'],
         issuer: 'hospital-management-api',
         audience: 'hospital-management-client',
-    });
+    };
+    return jwt.sign(payload, config.jwt.accessSecret, options);
 };
 
 /**
@@ -36,11 +37,12 @@ export const generateAccessToken = (payload: TokenPayload): string => {
  * Long-lived token for obtaining new access tokens
  */
 export const generateRefreshToken = (payload: TokenPayload): string => {
-    return jwt.sign(payload, config.jwt.refreshSecret, {
-        expiresIn: config.jwt.refreshExpiresIn,
+    const options: SignOptions = {
+        expiresIn: config.jwt.refreshExpiresIn as SignOptions['expiresIn'],
         issuer: 'hospital-management-api',
         audience: 'hospital-management-client',
-    });
+    };
+    return jwt.sign(payload, config.jwt.refreshSecret, options);
 };
 
 /**
@@ -93,4 +95,3 @@ export const decodeToken = (token: string): DecodedToken | null => {
         return null;
     }
 };
-

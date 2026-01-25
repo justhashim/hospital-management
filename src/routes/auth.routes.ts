@@ -19,7 +19,7 @@ import { authenticate } from '../middleware/auth.middleware';
  * - GET /me - Get current user profile
  */
 
-const router = Router();
+const router: Router = Router();
 
 // Public routes
 router.post('/register', register);

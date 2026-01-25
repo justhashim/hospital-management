@@ -23,7 +23,7 @@ import { authenticate, authorize } from '../middleware/auth.middleware';
  * - DELETE /patients/:id/permanent - Permanently delete patient (admin only)
  */
 
-const router = Router();
+const router: Router = Router();
 
 // All routes require authentication
 router.use(authenticate);

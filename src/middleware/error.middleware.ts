@@ -21,6 +21,7 @@ const handleZodError = (error: ZodError): ValidationError => {
     }));
 
     const message = errors.map((e: { field: string; message: string }) => `${e.field}: ${e.message}`).join(', ');
+    return new ValidationError(message);
 };
 
 /**
@@ -52,9 +53,9 @@ const handlePrismaError = (error: any): AppError => {
  */
 export const errorHandler = (
     error: Error,
-    req: Request,
+    _req: Request,
     res: Response,
-    next: NextFunction
+    _next: NextFunction
 ): void => {
     let appError: AppError;
 
@@ -105,7 +106,7 @@ export const errorHandler = (
  */
 export const notFoundHandler = (
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
 ): void => {
     const error = new AppError(`Route ${req.originalUrl} not found`, 404);
@@ -118,7 +119,7 @@ export const notFoundHandler = (
 export const asyncHandler = (
     fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
 ) => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        Promise.resolve(fn(req, res, next)).catch(next);
+    return (req: Request, _res: Response, next: NextFunction) => {
+        Promise.resolve(fn(req, _res, next)).catch(next);
     };
 };
