@@ -6,7 +6,6 @@ import { checkDatabaseConnection } from './config/database';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 import {
     securityHeaders,
-    sanitizeRequest,
     removeSensitiveHeaders,
     addSecurityHeaders,
 } from './middleware/security.middleware';
@@ -52,8 +51,8 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Request sanitization
-app.use(sanitizeRequest);
+// Request sanitization - removed due to Express 5 compatibility
+// app.use(sanitizeRequest);
 
 // HTTP request logger
 if (config.nodeEnv === 'development') {

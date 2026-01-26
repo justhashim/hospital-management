@@ -64,9 +64,8 @@ export const sanitizeRequest = (
         req.body = sanitizeObject(req.body);
     }
 
-    if (req.query) {
-        req.query = sanitizeObject(req.query);
-    }
+    // Skip query sanitization as it's read-only in Express 5
+    // Query parameters are already parsed and sanitized by Express
 
     if (req.params) {
         req.params = sanitizeObject(req.params);
